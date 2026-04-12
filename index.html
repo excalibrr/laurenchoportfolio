@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retro Portfolio</title>
+  <style>
+    :root {
+      --win-blue: #0a246a;
+      --win-blue-2: #a6caf0;
+      --win-gray: #c0c0c0;
+      --win-gray-light: #dfdfdf;
+      --win-gray-dark: #808080;
+      --win-black: #000000;
+      --win-white: #ffffff;
+      --text: #111111;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Tahoma", "MS Sans Serif", sans-serif;
+      background: #7f9db9;
+      color: var(--text);
+    }
+
+    body {
+      padding: 18px;
+    }
+
+    .window {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      border: 2px solid;
+      border-color: var(--win-white) var(--win-black) var(--win-black) var(--win-white);
+      background: var(--win-gray);
+      box-shadow: 2px 2px 0 #000;
+      min-height: calc(100vh - 36px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title-bar {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      color: white;
+      background: linear-gradient(90deg, var(--win-blue), #1084d0);
+      border-bottom: 1px solid #6b6b6b;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 0.1px;
+    }
+
+    .title-left {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .title-icon {
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(255,255,255,0.5);
+      background: linear-gradient(135deg, #ffd966, #ff9900);
+      flex: 0 0 auto;
+    }
+
+    .title-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 2px;
+    }
+
+    .control-btn {
+      width: 19px;
+      height: 17px;
+      border: 2px solid;
+      border-color: var(--win-white) var(--win-black) var(--win-black) var(--win-white);
+      background: var(--win-gray);
+      color: black;
+      font-size: 10px;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      font-weight: bold;
+    }
+
+    .menu-bar {
+      display: flex;
+      gap: 18px;
+      padding: 4px 8px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--win-gray-dark);
+      background: var(--win-gray);
+    }
+
+    .menu-item {
+      cursor: default;
+      user-select: none;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-top: 1px solid var(--win-white);
+      border-bottom: 1px solid var(--win-gray-dark);
+      background: var(--win-gray);
+    }
+
+    .tool-btn {
+      width: 66px;
+      min-height: 48px;
+      border: 2px solid;
+      border-color: transparent;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font: inherit;
+      font-size: 11px;
+      cursor: pointer;
+      color: #222;
+    }
+
+    .tool-btn:hover,
+    .tool-btn.active {
+      border-color: var(--win-white) var(--win-gray-dark) var(--win-gray-dark) var(--win-white);
+      background: #d6d6d6;
+    }
+
+    .tool-icon {
+      width: 20px;
+      height: 18px;
+      border: 1px solid #555;
+      background: linear-gradient(180deg, #fff, #c9c9c9);
+      position: relative;
+    }
+
+    .tool-icon::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border: 1px solid #7c7c7c;
+      background: white;
+    }
+
+    .address-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-top: 1px solid var(--win-white);
+      border-bottom: 1px solid var(--win-gray-dark);
+      background: var(--win-gray);
+      font-size: 12px;
+    }
+
+    .address-label {
+      white-space: nowrap;
+    }
+
+    .address-bar {
+      flex: 1;
+      min-width: 0;
+      border: 2px solid;
+      border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
+      background: white;
+      padding: 4px 6px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-family: "Courier New", monospace;
+    }
+
+    .go-btn {
+      border: 2px solid;
+      border-color: var(--win-white) var(--win-black) var(--win-black) var(--win-white);
+      background: var(--win-gray);
+      padding: 4px 10px;
+      height: 28px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      flex: 1;
+      min-height: 0;
+      background: var(--win-gray);
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--win-gray-dark);
+      padding: 10px;
+      background: #d4d0c8;
+    }
+
+    .panel {
+      border: 2px solid;
+      border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
+      background: var(--win-gray-light);
+      margin-bottom: 12px;
+      padding: 10px;
+    }
+
+    .panel h3 {
+      margin: 0 0 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 5px 6px;
+      color: #000;
+      text-decoration: none;
+      border: 1px solid transparent;
+      font-size: 13px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: var(--win-blue);
+      color: white;
+      border-color: #001b4f;
+    }
+
+    .content-wrap {
+      padding: 10px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .browser-canvas {
+      border: 2px solid;
+      border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
+      background: white;
+      flex: 1;
+      min-height: 520px;
+      padding: 24px;
+      overflow: auto;
+    }
+
+    .page {
+      max-width: 780px;
+    }
+
+    .page-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      margin-bottom: 12px;
+      border: 1px solid #888;
+      background: #efefef;
+      font-size: 12px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: 32px;
+      font-weight: normal;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      margin: 20px 0 10px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    p {
+      margin: 0 0 12px;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .placeholder-box {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px dashed #7f7f7f;
+      background: #fafafa;
+    }
+
+    .placeholder-box strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .status-bar {
+      height: 24px;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 2px;
+      padding: 2px;
+      background: var(--win-gray);
+      border-top: 1px solid var(--win-white);
+      font-size: 12px;
+    }
+
+    .status-cell {
+      border: 1px solid;
+      border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
+      padding: 2px 8px;
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .status-right {
+      min-width: 94px;
+      justify-content: center;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .desktop-card {
+      border: 2px solid;
+      border-color: var(--win-white) var(--win-gray-dark) var(--win-gray-dark) var(--win-white);
+      padding: 14px;
+      background: #efefef;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .desktop-card:hover {
+      background: #e4eefb;
+    }
+
+    .desktop-card-title {
+      font-weight: bold;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .muted {
+      color: #555;
+      font-size: 13px;
+    }
+
+    @media (max-width: 820px) {
+      body {
+        padding: 8px;
+      }
+
+      .main {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--win-gray-dark);
+      }
+
+      .browser-canvas {
+        min-height: 420px;
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-left">
+        <div class="title-icon"></div>
+        <div class="title-text">Microsoft Internet Explorer — Lauren Cho Portfolio</div>
+      </div>
+      <div class="window-controls" aria-hidden="true">
+        <div class="control-btn">_</div>
+        <div class="control-btn">□</div>
+        <div class="control-btn">×</div>
+      </div>
+    </div>
+
+    <div class="menu-bar">
+      <div class="menu-item">File</div>
+      <div class="menu-item">Edit</div>
+      <div class="menu-item">View</div>
+      <div class="menu-item">Favorites</div>
+      <div class="menu-item">Tools</div>
+      <div class="menu-item">Help</div>
+    </div>
+
+    <div class="toolbar" id="toolbar"></div>
+
+    <div class="address-row">
+      <div class="address-label">Address</div>
+      <div class="address-bar" id="addressBar">portfolio://home</div>
+      <button class="go-btn" id="homeBtn">Go</button>
+    </div>
+
+    <div class="main">
+      <aside class="sidebar">
+        <div class="panel">
+          <h3>Folders</h3>
+          <nav class="nav-list" id="sideNav"></nav>
+        </div>
+
+        <div class="panel">
+          <h3>Notes</h3>
+          <p class="muted">This is a starter shell with placeholder pages only. Swap each section with your real writing later.</p>
+        </div>
+      </aside>
+
+      <section class="content-wrap">
+        <div class="browser-canvas" id="content"></div>
+      </section>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-cell" id="statusText">Done</div>
+      <div class="status-cell status-right">Portfolio</div>
+      <div class="status-cell status-right">Internet</div>
+    </div>
+  </div>
+
+  <script>
+    const pages = {
+      home: {
+        title: "Home",
+        path: "portfolio://home",
+        body: `
+          <div class="page">
+            <div class="page-tag">Start Page</div>
+            <h1>Lauren Cho</h1>
+            <p>Retro portfolio shell inspired by old Microsoft and early web browser UI.</p>
+            <p>Use this as a landing page for your projects, case studies, resume, and personal info.</p>
+
+            <div class="home-grid">
+              <a class="desktop-card" href="#works">
+                <div class="desktop-card-title">Works</div>
+                <div class="muted">A placeholder index for selected projects.</div>
+              </a>
+              <a class="desktop-card" href="#case-study">
+                <div class="desktop-card-title">Case Study</div>
+                <div class="muted">An empty structure ready for a detailed write-up.</div>
+              </a>
+              <a class="desktop-card" href="#resume">
+                <div class="desktop-card-title">Resume</div>
+                <div class="muted">A simple page for experience, education, and links.</div>
+              </a>
+              <a class="desktop-card" href="#about">
+                <div class="desktop-card-title">About Me</div>
+                <div class="muted">Short bio, background, and contact details.</div>
+              </a>
+            </div>
+          </div>
+        `
+      },
+      works: {
+        title: "Works",
+        path: "portfolio://works",
+        body: `
+          <div class="page">
+            <div class="page-tag">Directory</div>
+            <h1>Works</h1>
+            <p>This page can become your project archive or selected works index.</p>
+            <div class="placeholder-box">
+              <strong>Placeholder ideas</strong>
+              <p>List project names, years, mediums, and short one-line descriptions here.</p>
+              <p>Example sections: UX/UI, branding, creative coding, research, and class projects.</p>
+            </div>
+          </div>
+        `
+      },
+      "case-study": {
+        title: "Case Study",
+        path: "portfolio://case-study",
+        body: `
+          <div class="page">
+            <div class="page-tag">Draft Page</div>
+            <h1>Case Study Title</h1>
+            <p>This is an empty placeholder for a full case study you will write later.</p>
+
+            <h2>Overview</h2>
+            <div class="placeholder-box">
+              <p>Add a short summary of the project, your role, timeline, and final outcome.</p>
+            </div>
+
+            <h2>Problem</h2>
+            <div class="placeholder-box">
+              <p>Describe the user problem, context, or design opportunity.</p>
+            </div>
+
+            <h2>Process</h2>
+            <div class="placeholder-box">
+              <p>Add research, sketches, decisions, iterations, and prototypes here.</p>
+            </div>
+
+            <h2>Outcome</h2>
+            <div class="placeholder-box">
+              <p>Document the final solution, reflections, and next steps.</p>
+            </div>
+          </div>
+        `
+      },
+      resume: {
+        title: "Resume",
+        path: "portfolio://resume",
+        body: `
+          <div class="page">
+            <div class="page-tag">Document</div>
+            <h1>Resume</h1>
+            <p>This can be a web version of your resume or a page linking to a PDF.</p>
+            <div class="placeholder-box">
+              <p>Add sections for experience, education, skills, awards, and contact links.</p>
+            </div>
+          </div>
+        `
+      },
+      about: {
+        title: "About Me",
+        path: "portfolio://about",
+        body: `
+          <div class="page">
+            <div class="page-tag">Profile</div>
+            <h1>About Me</h1>
+            <p>This page is for your intro, design philosophy, background, and interests.</p>
+            <div class="placeholder-box">
+              <p>Add a short personal bio, a portrait later, and any social/contact links.</p>
+            </div>
+          </div>
+        `
+      },
+      contact: {
+        title: "Contact",
+        path: "portfolio://contact",
+        body: `
+          <div class="page">
+            <div class="page-tag">Info</div>
+            <h1>Contact</h1>
+            <p>A lightweight placeholder for email, GitHub, LinkedIn, or other platforms.</p>
+            <div class="placeholder-box">
+              <p>Example: email, social links, availability, and location.</p>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    const order = ["home", "works", "case-study", "resume", "about", "contact"];
+
+    const toolbar = document.getElementById("toolbar");
+    const sideNav = document.getElementById("sideNav");
+    const content = document.getElementById("content");
+    const addressBar = document.getElementById("addressBar");
+    const statusText = document.getElementById("statusText");
+    const homeBtn = document.getElementById("homeBtn");
+
+    function buildNav() {
+      toolbar.innerHTML = "";
+      sideNav.innerHTML = "";
+
+      order.forEach((key) => {
+        const page = pages[key];
+
+        const tool = document.createElement("button");
+        tool.className = "tool-btn";
+        tool.dataset.key = key;
+        tool.innerHTML = `<span class="tool-icon"></span><span>${page.title}</span>`;
+        tool.addEventListener("click", () => goTo(key));
+        toolbar.appendChild(tool);
+
+        const link = document.createElement("a");
+        link.className = "nav-link";
+        link.href = `#${key}`;
+        link.textContent = page.title;
+        sideNav.appendChild(link);
+      });
+    }
+
+    function currentKey() {
+      const hash = window.location.hash.replace("#", "");
+      return pages[hash] ? hash : "home";
+    }
+
+    function goTo(key) {
+      window.location.hash = key;
+    }
+
+    function render() {
+      const key = currentKey();
+      const page = pages[key];
+
+      document.title = `${page.title} - Retro Portfolio`;
+      content.innerHTML = page.body;
+      addressBar.textContent = page.path;
+      statusText.textContent = `Loaded ${page.title}`;
+
+      document.querySelectorAll(".nav-link").forEach((el) => {
+        el.classList.toggle("active", el.getAttribute("href") === `#${key}`);
+      });
+
+      document.querySelectorAll(".tool-btn").forEach((el) => {
+        el.classList.toggle("active", el.dataset.key === key);
+      });
+    }
+
+    homeBtn.addEventListener("click", () => goTo("home"));
+    window.addEventListener("hashchange", render);
+
+    buildNav();
+    render();
+  </script>
+</body>
+</html>
