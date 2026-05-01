@@ -3,260 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retro Portfolio</title>
+  <title>Lauren Cho Portfolio</title>
   <style>
     :root {
-      --win-blue: #0a246a;
-      --win-blue-2: #a6caf0;
-      --win-gray: #c0c0c0;
-      --win-gray-light: #dfdfdf;
-      --win-gray-dark: #808080;
-      --win-black: #000000;
-      --win-white: #ffffff;
-      --text: #111111;
+      --desktop-pink: #f7bfd2;
+      --desktop-pink-dark: #e993b5;
+      --mac-gray: #d8d8d8;
+      --mac-gray-light: #f3f3f3;
+      --mac-gray-mid: #b9b9b9;
+      --mac-gray-dark: #777777;
+      --mac-black: #111111;
+      --mac-white: #ffffff;
+      --pink-soft: #ffe7f0;
+      --pink-card: #fff4f8;
+      --pink-hot: #d84f8b;
+      --text: #151515;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
       min-height: 100%;
-      font-family: "Tahoma", "MS Sans Serif", sans-serif;
-      background: #7f9db9;
+      font-family: "Chicago", "Geneva", "Monaco", "Courier New", monospace;
+      background:
+        radial-gradient(circle at 20px 20px, rgba(255,255,255,0.38) 0 2px, transparent 3px),
+        linear-gradient(135deg, var(--desktop-pink), #ffd9e7 45%, #f5a8c6);
+      background-size: 26px 26px, 100% 100%;
       color: var(--text);
     }
 
-    body {
-      padding: 18px;
+    body { padding: 18px; }
+
+    .system-menu {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      width: min(1200px, 100%);
+      margin: 0 auto 10px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 0 12px;
+      background: rgba(255,255,255,0.82);
+      border: 2px solid var(--mac-black);
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.22);
+      font-size: 13px;
     }
+
+    .apple-dot {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--mac-black);
+      border-radius: 50% 50% 45% 45%;
+      background: var(--pink-hot);
+      box-shadow: inset 3px 3px 0 rgba(255,255,255,0.55);
+      flex: 0 0 auto;
+    }
+
+    .menu-item { white-space: nowrap; }
 
     .window {
       width: min(1200px, 100%);
       margin: 0 auto;
-      border: 2px solid;
-      border-color: var(--win-white) var(--win-black) var(--win-black) var(--win-white);
-      background: var(--win-gray);
-      box-shadow: 2px 2px 0 #000;
-      min-height: calc(100vh - 36px);
+      border: 2px solid var(--mac-black);
+      background: var(--mac-gray);
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.25);
+      min-height: calc(100vh - 74px);
       display: flex;
       flex-direction: column;
     }
 
     .title-bar {
-      height: 28px;
-      display: flex;
+      min-height: 34px;
+      display: grid;
+      grid-template-columns: 34px 1fr 84px;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 6px;
-      color: white;
-      background: linear-gradient(90deg, var(--win-blue), #1084d0);
-      border-bottom: 1px solid #6b6b6b;
+      padding: 0 8px;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          var(--mac-gray-light) 0,
+          var(--mac-gray-light) 2px,
+          var(--mac-gray-mid) 3px,
+          var(--mac-gray-mid) 4px
+        );
+      border-bottom: 2px solid var(--mac-black);
       font-size: 13px;
       font-weight: bold;
-      letter-spacing: 0.1px;
+      text-align: center;
     }
 
-    .title-left {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      min-width: 0;
-    }
-
-    .title-icon {
-      width: 16px;
-      height: 16px;
-      border: 1px solid rgba(255,255,255,0.5);
-      background: linear-gradient(135deg, #ffd966, #ff9900);
-      flex: 0 0 auto;
-    }
-
-    .title-text {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .window-controls {
-      display: flex;
-      gap: 2px;
-    }
-
-    .control-btn {
-      width: 19px;
-      height: 17px;
-      border: 2px solid;
-      border-color: var(--win-white) var(--win-black) var(--win-black) var(--win-white);
-      background: var(--win-gray);
-      color: black;
-      font-size: 10px;
+    .close-box, .zoom-box {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--mac-black);
+      background: var(--mac-white);
       display: grid;
       place-items: center;
+      font-size: 12px;
       line-height: 1;
-      font-weight: bold;
     }
 
-    .menu-bar {
-      display: flex;
-      gap: 18px;
-      padding: 4px 8px;
-      font-size: 13px;
-      border-bottom: 1px solid var(--win-gray-dark);
-      background: var(--win-gray);
-    }
+    .zoom-box { justify-self: end; }
 
-    .menu-item {
-      cursor: default;
-      user-select: none;
+    .title-text {
+      display: inline-block;
+      justify-self: center;
+      padding: 2px 12px;
+      background: var(--mac-gray);
+      border-left: 4px solid var(--mac-gray);
+      border-right: 4px solid var(--mac-gray);
     }
 
     .toolbar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
-      padding: 8px;
-      border-top: 1px solid var(--win-white);
-      border-bottom: 1px solid var(--win-gray-dark);
-      background: var(--win-gray);
+      gap: 10px;
+      padding: 12px;
+      background: var(--pink-soft);
+      border-bottom: 2px solid var(--mac-black);
     }
 
     .tool-btn {
-      width: 66px;
-      min-height: 48px;
-      border: 2px solid;
-      border-color: transparent;
+      width: 76px;
+      min-height: 64px;
+      border: 2px solid transparent;
       background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 6px;
       font: inherit;
       font-size: 11px;
       cursor: pointer;
-      color: #222;
+      color: var(--text);
     }
 
-    .tool-btn:hover,
-    .tool-btn.active {
-      border-color: var(--win-white) var(--win-gray-dark) var(--win-gray-dark) var(--win-white);
-      background: #d6d6d6;
+    .tool-btn:hover, .tool-btn.active {
+      border-color: var(--mac-black);
+      background: rgba(255,255,255,0.62);
+      box-shadow: inset 2px 2px 0 rgba(0,0,0,0.12);
     }
 
     .tool-icon {
-      width: 20px;
-      height: 18px;
-      border: 1px solid #555;
-      background: linear-gradient(180deg, #fff, #c9c9c9);
+      width: 34px;
+      height: 28px;
+      border: 2px solid var(--mac-black);
+      background: linear-gradient(180deg, var(--mac-white) 0 35%, #ffd1e2 36% 100%);
       position: relative;
+      border-radius: 2px;
     }
 
-    .tool-icon::after {
+    .tool-icon::before {
       content: "";
       position: absolute;
-      inset: 3px;
-      border: 1px solid #7c7c7c;
-      background: white;
+      top: -8px;
+      left: 4px;
+      width: 14px;
+      height: 8px;
+      border: 2px solid var(--mac-black);
+      border-bottom: 0;
+      background: #fff8fb;
     }
 
-    .address-row {
+    .path-row {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 8px;
-      border-top: 1px solid var(--win-white);
-      border-bottom: 1px solid var(--win-gray-dark);
-      background: var(--win-gray);
+      padding: 8px 12px;
+      background: var(--mac-gray-light);
+      border-bottom: 2px solid var(--mac-black);
       font-size: 12px;
     }
 
-    .address-label {
-      white-space: nowrap;
-    }
+    .path-label { white-space: nowrap; font-weight: bold; }
 
-    .address-bar {
+    .path-bar {
       flex: 1;
       min-width: 0;
-      border: 2px solid;
-      border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
-      background: white;
-      padding: 4px 6px;
-      height: 28px;
+      border: 2px solid var(--mac-black);
+      background: var(--mac-white);
+      padding: 5px 8px;
+      height: 30px;
       display: flex;
       align-items: center;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      font-family: "Courier New", monospace;
     }
 
     .go-btn {
-      border: 2px solid;
-      border-color: var(--win-white) var(--win-black) var(--win-black) var(--win-white);
-      background: var(--win-gray);
-      padding: 4px 10px;
-      height: 28px;
+      border: 2px solid var(--mac-black);
+      background: var(--mac-white);
+      padding: 4px 12px;
+      height: 30px;
       font: inherit;
       cursor: pointer;
+      box-shadow: 2px 2px 0 var(--mac-gray-dark);
     }
+
+    .go-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--mac-gray-dark); }
 
     .main {
       display: grid;
-      grid-template-columns: 220px 1fr;
+      grid-template-columns: 230px 1fr;
       gap: 0;
       flex: 1;
       min-height: 0;
-      background: var(--win-gray);
+      background: var(--mac-gray);
     }
 
     .sidebar {
-      border-right: 1px solid var(--win-gray-dark);
-      padding: 10px;
-      background: #d4d0c8;
+      border-right: 2px solid var(--mac-black);
+      padding: 12px;
+      background: #f8d8e5;
     }
 
     .panel {
-      border: 2px solid;
-      border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
-      background: var(--win-gray-light);
-      margin-bottom: 12px;
+      border: 2px solid var(--mac-black);
+      background: var(--pink-card);
+      margin-bottom: 14px;
       padding: 10px;
+      box-shadow: inset 2px 2px 0 rgba(255,255,255,0.8), inset -2px -2px 0 rgba(0,0,0,0.09);
     }
 
     .panel h3 {
       margin: 0 0 8px;
       font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
+      text-transform: lowercase;
+      letter-spacing: 0.3px;
+      border-bottom: 2px dotted var(--mac-black);
+      padding-bottom: 5px;
     }
 
-    .nav-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .nav-list { display: flex; flex-direction: column; gap: 6px; }
 
     .nav-link {
       display: block;
-      padding: 5px 6px;
-      color: #000;
+      padding: 6px 7px;
+      color: var(--text);
       text-decoration: none;
-      border: 1px solid transparent;
+      border: 2px solid transparent;
       font-size: 13px;
     }
 
-    .nav-link:hover,
-    .nav-link.active {
-      background: var(--win-blue);
+    .nav-link:hover, .nav-link.active {
+      background: var(--pink-hot);
       color: white;
-      border-color: #001b4f;
+      border-color: var(--mac-black);
     }
 
     .content-wrap {
-      padding: 10px;
+      padding: 12px;
       min-width: 0;
       display: flex;
       flex-direction: column;
@@ -264,181 +266,184 @@
     }
 
     .browser-canvas {
-      border: 2px solid;
-      border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
-      background: white;
+      border: 2px solid var(--mac-black);
+      background: #fffafd;
       flex: 1;
       min-height: 520px;
-      padding: 24px;
+      padding: 26px;
       overflow: auto;
+      box-shadow: inset 4px 4px 0 rgba(0,0,0,0.08);
     }
 
-    .page {
-      max-width: 780px;
-    }
+    .page { max-width: 830px; }
 
     .page-tag {
       display: inline-block;
-      padding: 2px 6px;
-      margin-bottom: 12px;
-      border: 1px solid #888;
-      background: #efefef;
+      padding: 3px 8px;
+      margin-bottom: 14px;
+      border: 2px solid var(--mac-black);
+      background: #ffe0ec;
       font-size: 12px;
+      text-transform: lowercase;
     }
 
     h1 {
       margin: 0 0 14px;
-      font-size: 32px;
+      font-size: 34px;
       font-weight: normal;
-      letter-spacing: -0.5px;
+      letter-spacing: -1px;
     }
 
     h2 {
-      margin: 20px 0 10px;
-      font-size: 20px;
+      margin: 24px 0 10px;
+      font-size: 19px;
       font-weight: bold;
+      border-bottom: 2px solid var(--mac-black);
+      padding-bottom: 4px;
     }
 
-    p {
-      margin: 0 0 12px;
+    h3 {
+      margin: 16px 0 6px;
+      font-size: 15px;
+    }
+
+    p, li {
       line-height: 1.55;
       font-size: 14px;
     }
 
-    .placeholder-box {
-      margin-top: 18px;
+    p { margin: 0 0 12px; }
+
+    ul { margin: 8px 0 14px 20px; padding: 0; }
+
+    .placeholder-box, .resume-box {
+      margin-top: 16px;
       padding: 16px;
-      border: 1px dashed #7f7f7f;
-      background: #fafafa;
+      border: 2px dashed var(--mac-black);
+      background: var(--pink-card);
     }
 
-    .placeholder-box strong {
-      display: block;
-      margin-bottom: 8px;
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
     }
+
+    .desktop-card {
+      border: 2px solid var(--mac-black);
+      padding: 16px;
+      background: var(--mac-white);
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 4px 4px 0 rgba(216,79,139,0.25);
+    }
+
+    .desktop-card:hover {
+      background: #ffe8f1;
+      transform: translate(-1px, -1px);
+    }
+
+    .desktop-card-title {
+      font-weight: bold;
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+
+    .muted { color: #5a4a51; font-size: 13px; }
+
+    .resume-header {
+      border: 2px solid var(--mac-black);
+      background: #ffe4ef;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .resume-contact { font-size: 13px; line-height: 1.6; }
+
+    .resume-download {
+      display: inline-block;
+      margin: 6px 0 18px;
+      padding: 8px 12px;
+      border: 2px solid var(--mac-black);
+      background: var(--mac-white);
+      color: var(--text);
+      text-decoration: none;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.18);
+    }
+
+    .resume-download:hover { background: #ffe1ed; }
 
     .status-bar {
-      height: 24px;
+      min-height: 26px;
       display: grid;
       grid-template-columns: 1fr auto auto;
       gap: 2px;
-      padding: 2px;
-      background: var(--win-gray);
-      border-top: 1px solid var(--win-white);
+      padding: 3px;
+      background: var(--mac-gray);
+      border-top: 2px solid var(--mac-black);
       font-size: 12px;
     }
 
     .status-cell {
-      border: 1px solid;
-      border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
-      padding: 2px 8px;
+      border: 2px solid var(--mac-black);
+      background: var(--mac-gray-light);
+      padding: 3px 8px;
       display: flex;
       align-items: center;
       min-width: 0;
     }
 
-    .status-right {
-      min-width: 94px;
-      justify-content: center;
-    }
-
-    .home-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .desktop-card {
-      border: 2px solid;
-      border-color: var(--win-white) var(--win-gray-dark) var(--win-gray-dark) var(--win-white);
-      padding: 14px;
-      background: #efefef;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .desktop-card:hover {
-      background: #e4eefb;
-    }
-
-    .desktop-card-title {
-      font-weight: bold;
-      margin-bottom: 6px;
-      font-size: 14px;
-    }
-
-    .muted {
-      color: #555;
-      font-size: 13px;
-    }
+    .status-right { min-width: 98px; justify-content: center; }
 
     @media (max-width: 820px) {
-      body {
-        padding: 8px;
-      }
-
-      .main {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        border-right: 0;
-        border-bottom: 1px solid var(--win-gray-dark);
-      }
-
-      .browser-canvas {
-        min-height: 420px;
-        padding: 18px;
-      }
-
-      h1 {
-        font-size: 26px;
-      }
+      body { padding: 8px; }
+      .system-menu { gap: 10px; overflow-x: auto; }
+      .main { grid-template-columns: 1fr; }
+      .sidebar { border-right: 0; border-bottom: 2px solid var(--mac-black); }
+      .browser-canvas { min-height: 420px; padding: 18px; }
+      h1 { font-size: 27px; }
+      .title-bar { grid-template-columns: 30px 1fr 42px; }
+      .status-bar { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+  <div class="system-menu" aria-label="classic mac menu bar">
+    <div class="apple-dot" aria-hidden="true"></div>
+    <strong>finder</strong>
+    <div class="menu-item">file</div>
+    <div class="menu-item">edit</div>
+    <div class="menu-item">view</div>
+    <div class="menu-item">special</div>
+    <div class="menu-item">help</div>
+  </div>
+
   <div class="window">
     <div class="title-bar">
-      <div class="title-left">
-        <div class="title-icon"></div>
-        <div class="title-text">Microsoft Internet Explorer — Lauren Cho Portfolio</div>
-      </div>
-      <div class="window-controls" aria-hidden="true">
-        <div class="control-btn">_</div>
-        <div class="control-btn">□</div>
-        <div class="control-btn">×</div>
-      </div>
-    </div>
-
-    <div class="menu-bar">
-      <div class="menu-item">File</div>
-      <div class="menu-item">Edit</div>
-      <div class="menu-item">View</div>
-      <div class="menu-item">Favorites</div>
-      <div class="menu-item">Tools</div>
-      <div class="menu-item">Help</div>
+      <div class="close-box" aria-hidden="true">×</div>
+      <div class="title-text">lauren cho portfolio</div>
+      <div class="zoom-box" aria-hidden="true">□</div>
     </div>
 
     <div class="toolbar" id="toolbar"></div>
 
-    <div class="address-row">
-      <div class="address-label">Address</div>
-      <div class="address-bar" id="addressBar">portfolio://home</div>
-      <button class="go-btn" id="homeBtn">Go</button>
+    <div class="path-row">
+      <div class="path-label">location:</div>
+      <div class="path-bar" id="addressBar">macintosh hd:portfolio:home</div>
+      <button class="go-btn" id="homeBtn">home</button>
     </div>
 
     <div class="main">
       <aside class="sidebar">
         <div class="panel">
-          <h3>Folders</h3>
+          <h3>folders</h3>
           <nav class="nav-list" id="sideNav"></nav>
         </div>
 
         <div class="panel">
-          <h3>Notes</h3>
-          <p class="muted">This is a starter shell with placeholder pages only. Swap each section with your real writing later.</p>
+          <h3>note</h3>
+          <p class="muted">pink old mac-inspired portfolio shell for ui/ux, design work, case studies, and resume.</p>
         </div>
       </aside>
 
@@ -448,9 +453,9 @@
     </div>
 
     <div class="status-bar">
-      <div class="status-cell" id="statusText">Done</div>
-      <div class="status-cell status-right">Portfolio</div>
-      <div class="status-cell status-right">Internet</div>
+      <div class="status-cell" id="statusText">ready</div>
+      <div class="status-cell status-right">portfolio</div>
+      <div class="status-cell status-right">classic mac</div>
     </div>
   </div>
 
@@ -458,30 +463,30 @@
     const pages = {
       home: {
         title: "Home",
-        path: "portfolio://home",
+        path: "macintosh hd:portfolio:home",
         body: `
           <div class="page">
-            <div class="page-tag">Start Page</div>
+            <div class="page-tag">start page</div>
             <h1>Lauren Cho</h1>
-            <p>Retro portfolio shell inspired by old Microsoft and early web browser UI.</p>
-            <p>i use this as a landing page for my projects, case studies, resume, and personal info.</p>
+            <p>i’m a fourth-year uc san diego cognitive science student with a ui/ux focus, and i’m interested in graphic design, web design, branding, and visual communication.</p>
+            <p>this portfolio is a pink old mac-inspired home for my projects, case studies, resume, and personal design work.</p>
 
             <div class="home-grid">
               <a class="desktop-card" href="#works">
-                <div class="desktop-card-title">Works</div>
-                <div class="muted">A placeholder index for selected projects.</div>
+                <div class="desktop-card-title">works</div>
+                <div class="muted">selected ui/ux, graphic design, branding, and web projects.</div>
               </a>
               <a class="desktop-card" href="#case-study">
-                <div class="desktop-card-title">Case Study</div>
-                <div class="muted">An empty structure ready for a detailed write-up.</div>
+                <div class="desktop-card-title">case study</div>
+                <div class="muted">a placeholder structure for a detailed write-up.</div>
               </a>
               <a class="desktop-card" href="#resume">
-                <div class="desktop-card-title">Resume</div>
-                <div class="muted">A simple page for experience, education, and links.</div>
+                <div class="desktop-card-title">resume</div>
+                <div class="muted">education, experience, skills, and a pdf download.</div>
               </a>
               <a class="desktop-card" href="#about">
-                <div class="desktop-card-title">About Me</div>
-                <div class="muted">Short bio, background, and contact details.</div>
+                <div class="desktop-card-title">about me</div>
+                <div class="muted">my background, design interests, and contact info.</div>
               </a>
             </div>
           </div>
@@ -489,45 +494,45 @@
       },
       works: {
         title: "Works",
-        path: "portfolio://works",
+        path: "macintosh hd:portfolio:works",
         body: `
           <div class="page">
-            <div class="page-tag">Directory</div>
+            <div class="page-tag">directory</div>
             <h1>Works</h1>
             <p>this page will become my project archive or selected works index.</p>
             <div class="placeholder-box">
-              <strong>Placeholder ideas</strong>
-              <p>List project names, years, mediums, and short one-line descriptions here.</p>
-              <p>Example sections: UX/UI, branding, creative coding, research, and class projects.</p>
+              <strong>placeholder ideas</strong>
+              <p>i will add project names, years, mediums, and short one-line descriptions here.</p>
+              <p>possible sections: ux/ui, branding, creative coding, research, and class projects.</p>
             </div>
           </div>
         `
       },
       "case-study": {
         title: "Case Study",
-        path: "portfolio://case-study",
+        path: "macintosh hd:portfolio:case-study",
         body: `
           <div class="page">
-            <div class="page-tag">Draft Page</div>
+            <div class="page-tag">draft page</div>
             <h1>Case Study Title</h1>
             <p>this is an empty placeholder for a full case study i will write later.</p>
 
-            <h2>Overview</h2>
+            <h2>overview</h2>
             <div class="placeholder-box">
               <p>i will add a short summary of the project, my role, timeline, and final outcome.</p>
             </div>
 
-            <h2>Problem</h2>
+            <h2>problem</h2>
             <div class="placeholder-box">
               <p>i will describe the user problem, context, or design opportunity.</p>
             </div>
 
-            <h2>Process</h2>
+            <h2>process</h2>
             <div class="placeholder-box">
               <p>i will add research, sketches, decisions, iterations, and prototypes here.</p>
             </div>
 
-            <h2>Outcome</h2>
+            <h2>outcome</h2>
             <div class="placeholder-box">
               <p>i will document the final solution, reflections, and next steps.</p>
             </div>
@@ -536,42 +541,76 @@
       },
       resume: {
         title: "Resume",
-        path: "portfolio://resume",
+        path: "macintosh hd:portfolio:resume",
         body: `
           <div class="page">
-            <div class="page-tag">Document</div>
-            <h1>Resume</h1>
-            <p>this will be a web version of my resume or a page linking to a pdf.</p>
-            <div class="placeholder-box">
-              <p>i will add sections for my experience, education, skills, awards, and contact links.</p>
+            <div class="page-tag">document</div>
+            <div class="resume-header">
+              <h1>Lauren Cho</h1>
+              <div class="resume-contact">San Diego, CA · 213-507-7734 · lscho@ucsd.edu</div>
+            </div>
+
+            <a class="resume-download" href="LaurenChoResume2026.pdf" target="_blank" rel="noopener">open resume pdf</a>
+
+            <h2>summary</h2>
+            <p>Fourth-year UC San Diego Cognitive Science student with a UI/UX focus and experience in graphic design, web design, branding, event support, and customer-facing roles. Skilled in Figma, Adobe Creative Cloud, logo design, and visual communication. Fluent in English and conversationally fluent in Korean.</p>
+
+            <h2>education</h2>
+            <div class="resume-box">
+              <h3>University of California, San Diego</h3>
+              <p>B.S. Cognitive Science, UI/UX Focus<br>Fourth-Year Undergraduate · June 2026</p>
+            </div>
+
+            <h2>experience</h2>
+            <div class="resume-box">
+              <h3>Graphic Designer | TREND, UC San Diego | 2024–2025</h3>
+              <ul>
+                <li>Designed graphics and visual assets for student-facing content while supporting cohesive branding and layout consistency.</li>
+                <li>Collaborated on publication and promotional materials that communicated clearly to campus audiences.</li>
+              </ul>
+
+              <h3>Booth Staff / Brand Experience Support | Hoyoverse Booth, San Diego Comic-Con | 2024</h3>
+              <ul>
+                <li>Supported attendee interaction, crowd flow, and front-facing booth operations in a high-traffic convention setting.</li>
+                <li>Represented the brand while helping deliver a positive visitor experience during San Diego Comic-Con.</li>
+              </ul>
+            </div>
+
+            <h2>skills</h2>
+            <div class="resume-box">
+              <p><strong>design:</strong> graphic design, web design, logo design, visual branding, layout design, UI/UX design</p>
+              <p><strong>tools:</strong> Figma, Adobe Creative Cloud, Photoshop, Illustrator, InDesign, XD, Acrobat, After Effects, Premiere Pro</p>
+              <p><strong>languages:</strong> English (fluent), Korean (conversational fluency)</p>
             </div>
           </div>
         `
       },
       about: {
         title: "About Me",
-        path: "portfolio://about",
+        path: "macintosh hd:portfolio:about",
         body: `
           <div class="page">
-            <div class="page-tag">Profile</div>
+            <div class="page-tag">profile</div>
             <h1>About Me</h1>
-            <p>this page is for my intro, design philosophy, background, and interests.</p>
+            <p>i’m lauren, a uc san diego cognitive science student focused on ui/ux. i like making interfaces feel expressive, clear, and visually memorable.</p>
+            <p>my background includes graphic design, web design, logo design, figma, adobe creative cloud, and front-facing brand experience work.</p>
             <div class="placeholder-box">
-              <p>i will add a short personal bio, a portrait later, and any social/contact links.</p>
+              <p>i will add a longer personal bio, portrait, and social/contact links here later.</p>
             </div>
           </div>
         `
       },
       contact: {
         title: "Contact",
-        path: "portfolio://contact",
+        path: "macintosh hd:portfolio:contact",
         body: `
           <div class="page">
-            <div class="page-tag">Info</div>
+            <div class="page-tag">info</div>
             <h1>Contact</h1>
-            <p>a lightweight placeholder for my email, github, linkedin, or other platforms.</p>
+            <p>email: lscho@ucsd.edu</p>
+            <p>portfolio: excalibrr.github.io/laurenchoportfolio/</p>
             <div class="placeholder-box">
-              <p>example: my email, social links, availability, and location.</p>
+              <p>i can add github, linkedin, instagram, or any other links here.</p>
             </div>
           </div>
         `
@@ -622,10 +661,10 @@
       const key = currentKey();
       const page = pages[key];
 
-      document.title = `${page.title} - Retro Portfolio`;
+      document.title = `${page.title} - Lauren Cho Portfolio`;
       content.innerHTML = page.body;
       addressBar.textContent = page.path;
-      statusText.textContent = `Loaded ${page.title}`;
+      statusText.textContent = `opened ${page.title.toLowerCase()}`;
 
       document.querySelectorAll(".nav-link").forEach((el) => {
         el.classList.toggle("active", el.getAttribute("href") === `#${key}`);
@@ -644,4 +683,3 @@
   </script>
 </body>
 </html>
-
