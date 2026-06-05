@@ -513,47 +513,161 @@
           </div>
         `
       },
-      "case-study": {
-        title: "Case Study",
-        path: "macintosh hd:portfolio:case-study",
-        body: `
-          <div class="page">
-            <div class="page-tag">draft page</div>
-            <h1>Redesigning iPhone's Most Basic Feature</h1>
-            <p> A phone's most fundamental feature is making phone calls. We wanted to start with that simple fact and ask an equally simple question: does this basic experience actually work for everyone? </p>
-            <p>(It doesn't)</p>
-            <p> Around 48 million Americans have some degree of hearing loss or impairment. A phone call is never just a phone call when someone has to schedule a doctor’s appointment, navigate insurance, and call their landlord. Each of these tasks include a compromise with technology that wasn't built with them in mind. 
-              Apple has made progress over the years, including features like Live Captions, introduced in iOS 16 and expanded in iOS 26, which transcribes what the other person says in real time. However, the people who need phone accessibility the most don't know it exists.
-              Our project proposes redesigning the iOS Phone app to support deaf and hard-of-hearing users through the full arc of a phone call. In addition to live captioning, preparation, IVR navigation, real-time detail verification, type-to-speech communication, and structured post-call summaries is our mission. We're not building a separate accessibility app. We're arguing that these tools belong in the same action sheet as Call Recording and Hold Assist so the UI is native and integrated. 
-              </p>
+     "case-study": {
+  title: "Case Study",
+  path: "macintosh hd:portfolio:case-study",
+  body: `
+    <style>
+      /* ── Lightbox ── */
+      .lb-overlay {
+        display:none; position:fixed; inset:0; background:rgba(0,0,0,.82);
+        z-index:9999; align-items:center; justify-content:center; cursor:zoom-out;
+      }
+      .lb-overlay.open { display:flex; }
+      .lb-overlay img { max-width:92vw; max-height:88vh; border:3px solid #fff; box-shadow:0 0 40px rgba(0,0,0,.6); }
+      .lb-close { position:fixed; top:18px; right:22px; color:#fff; font-size:28px; cursor:pointer; line-height:1; }
 
-            <h2>What Personally Brought Me Here</h2>
-            <div class="placeholder-box">
-              <p>We started this project by asking ourselves what everyday tasks look like for users from all scopes. Phones were designed around voice, and keyboards were designed around sight. We kept coming back to the most fundamental version of that question: what happens when the most basic app on your phone, the Phone app, doesn't work for you?
-Our team considered several directions early on, however, the standard sequence of a phone call really stood out, because the problem was so fundamental and so under-addressed. Everyone in our class uses their phone to make calls without thinking about it. We wanted to design for the people who can't do that.</p>
-            </div>
+      /* ── Figma flow strip ── */
+      .flow-strip {
+        display:flex; gap:10px; overflow-x:auto; padding-bottom:10px;
+        margin:14px 0 20px;
+        scrollbar-width:thin; scrollbar-color: #d84f8b #ffe7f0;
+      }
+      .flow-frame {
+        flex:0 0 auto; width:140px; border:2px solid #111;
+        background:#fff; cursor:zoom-in;
+        box-shadow:3px 3px 0 rgba(216,79,139,.3);
+        transition: transform .15s;
+      }
+      .flow-frame:hover { transform:translateY(-3px); box-shadow:4px 6px 0 rgba(216,79,139,.45); }
+      .flow-frame img { width:100%; display:block; }
+      .flow-frame .frame-label {
+        font-size:10px; padding:4px 6px; background:#ffe0ec;
+        border-top:2px solid #111; text-align:center; line-height:1.3;
+      }
 
-            <h2>User Research</h2>
-            <div class="placeholder-box">
-              <p>I went in with many assumptions. First, I assumed that deaf people would want technology that helps them function more like hearing people. I assumed the goal was to merely close a gap.
-The interviews that our team has conducted entirely changed how I thought about our design project. 
-One of our participants, Selena, is a CODA (Child of Deaf Adults), and the co-president of the ASL club at UCSD corrected my idea that deaf people are eager to assimilate to the culture of hearing or oral people. 
-She also shared something that shaped our design direction significantly. She said that for many Deaf people, reading captions all day isn't the same as actually communicating. "Even through an interpreter feels better than just typing to each other." ASL is a visual-spatial language with grammar, emotion, and nuance that English text can't capture. Captions are functional, but they're not the preferred way to communicate. This pushed us to include sign-to-speech (using the front camera to recognize ASL) as a future-state feature in our redesign — not as a gimmick, but as a genuine path toward letting Deaf users communicate in their own language on a phone call.
-</p>
-            </div>
+      /* ── Before / After ── */
+      .ba-grid {
+        display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0 20px;
+      }
+      .ba-card {
+        border:2px solid #111; background:#fff; cursor:zoom-in;
+        box-shadow:4px 4px 0 rgba(0,0,0,.18);
+      }
+      .ba-card:hover { background:#ffe8f1; }
+      .ba-card img { width:100%; display:block; }
+      .ba-label {
+        font-size:11px; font-weight:bold; padding:6px 8px;
+        background:#ffe0ec; border-top:2px solid #111; text-align:center;
+        text-transform:uppercase; letter-spacing:.5px;
+      }
+      .ba-label.after { background:#d84f8b; color:#fff; }
 
-            <h2>process</h2>
-            <div class="placeholder-box">
-              <p>i will add research, sketches, decisions, iterations, and prototypes here.</p>
-            </div>
+      /* ── Section divider ── */
+      .cs-divider {
+        border:none; border-top:2px dashed #d84f8b; margin:22px 0;
+      }
+      @media(max-width:600px){
+        .ba-grid { grid-template-columns:1fr; }
+        .flow-frame { width:110px; }
+      }
+    </style>
 
-            <h2>outcome</h2>
-            <div class="placeholder-box">
-              <p>i will document the final solution, reflections, and next steps.</p>
-            </div>
-          </div>
-        `
-      },
+    <!-- Lightbox -->
+    <div class="lb-overlay" id="lb" onclick="this.classList.remove('open')">
+      <span class="lb-close" onclick="document.getElementById('lb').classList.remove('open')">×</span>
+      <img id="lb-img" src="" alt="enlarged screen" />
+    </div>
+    <script>
+      function openLB(src){ 
+        document.getElementById('lb-img').src=src; 
+        document.getElementById('lb').classList.add('open'); 
+      }
+    </script>
+
+    <div class="page">
+      <div class="page-tag">case study · cogs 127</div>
+      <h1>Redesigning the iPhone Phone App for Deaf &amp; Hard-of-Hearing Users</h1>
+
+      <p>A phone's most fundamental feature is making phone calls. We asked a simple question: does this basic experience actually work for everyone? <strong>It doesn't.</strong></p>
+      <p>Around 48 million Americans have some degree of hearing loss. Our team redesigned the iOS Phone app to support deaf and hard-of-hearing users through the full arc of a call — preparation, IVR navigation, live captions, type-to-speech, and post-call summaries. These tools belong natively in the same action sheet as Call Recording, not hidden in Settings.</p>
+
+      <hr class="cs-divider" />
+
+      <!-- ── WHAT PERSONALLY BROUGHT US HERE ── -->
+      <h2>What Brought Us Here</h2>
+      <p>We kept returning to one fundamental question: what happens when the most basic app on your phone — the Phone app — doesn't work for you? Phones were designed around voice. Keyboards were designed around sight. We wanted to design for the people who fall through both gaps.</p>
+      <p>Apple has made progress, including Live Captions introduced in iOS 16 and expanded in iOS 26. But the people who need phone accessibility most often don't know it exists. Our project proposes making accessibility a first-class citizen of the call UI, not an afterthought in a settings menu.</p>
+
+      <hr class="cs-divider" />
+
+      <!-- ── USER RESEARCH ── -->
+      <h2>User Research</h2>
+      <p>I went in with assumptions. I assumed deaf users wanted technology that helps them function more like hearing people — that the goal was to close a gap. Our interviews entirely changed that framing.</p>
+      <p>One participant, Selena, is a CODA (Child of Deaf Adults) and co-president of UCSD's ASL club. She corrected my assumption that Deaf people are eager to assimilate into hearing culture. She also shared something that shaped our design significantly: "Even through an interpreter feels better than just typing to each other." ASL is a visual-spatial language with grammar, emotion, and nuance that English text can't capture. Captions are functional — but not preferred. This pushed us to include sign-to-speech (using the front camera to recognize ASL) as a future-state feature.</p>
+
+      <hr class="cs-divider" />
+
+      <!-- ── FIGMA PROTOTYPE FLOW ── -->
+      <h2>High-Fidelity Prototypes</h2>
+      <p>Scroll through the screens below — click any to enlarge. The flow runs from the initial call action sheet → Live Caption setup → language selection → active captioned call → text-to-speech → post-call transcript save.</p>
+
+      <div class="flow-strip">
+        <div class="flow-frame" onclick="openLB(this.querySelector('img').src)">
+          <img src="Screenshot_2026-06-05_at_12_07_27_PM.png" alt="Call Screen 5–6" />
+          <div class="frame-label">Action Sheet<br/>+ Live Caption entry</div>
+        </div>
+        <div class="flow-frame" onclick="openLB(this.querySelector('img').src)">
+          <img src="Screenshot_2026-06-05_at_12_07_41_PM.png" alt="Call Screens 7–8" />
+          <div class="frame-label">Communication Assist<br/>setup flow</div>
+        </div>
+        <div class="flow-frame" onclick="openLB(this.querySelector('img').src)">
+          <img src="Screenshot_2026-06-05_at_12_07_48_PM.png" alt="Call Screen 10" />
+          <div class="frame-label">Caller view<br/>when feature is on</div>
+        </div>
+      </div>
+
+      <p class="muted">Full interactive prototype on Figma (COGS 127 — High-Fidelity Prototypes). Screens include: action sheet redesign, Communication Assist onboarding, real-time captioned call, text-to-speech keyboard, translation toggle, and "Save Transcript" post-call screen.</p>
+
+      <hr class="cs-divider" />
+
+      <!-- ── BEFORE / AFTER ── -->
+      <h2>Before &amp; After: Key Redesign Decisions</h2>
+
+      <p><strong>Change 1 — Unified setup.</strong> User testing showed separate setup steps for captions, translation, and language selection felt overwhelming. We consolidated Live Caption, Translation, and Text-to-Speech into a single "Communication Assist" sheet.</p>
+
+      <div class="ba-grid">
+        <div class="ba-card" onclick="openLB(this.querySelector('img').src)">
+          <img src="Screenshot_2026-06-05_at_12_08_42_PM.png" alt="Before and after: setup consolidation" />
+          <div class="ba-label">setup consolidation</div>
+        </div>
+        <div class="ba-card" onclick="openLB(this.querySelector('img').src)">
+          <img src="Screenshot_2026-06-05_at_12_08_56_PM.png" alt="Before and after: in-call persistence" />
+          <div class="ba-label after">in-call persistence</div>
+        </div>
+      </div>
+
+      <p><strong>Change 2 — Persistent in-call controls.</strong> Users wanted accessibility tools to remain available throughout the call and requested clearer feedback when communication support features were active. We added a persistent "Communication Assist ON" pill and toggles for Live Captions and Translations directly in the call UI.</p>
+
+      <p><strong>Change 3 — Caller-side transparency.</strong> The other party now sees a small notice that communication assist features are being used — building trust and reducing confusion on both ends of the call.</p>
+
+      <hr class="cs-divider" />
+
+      <!-- ── PROCESS ── -->
+      <h2>Process</h2>
+      <div class="placeholder-box">
+        <p>Milestones: user interviews (P1–P3), user flows, low-fi UI sketches, Figma prototypes, Milestone 5 user feedback, iterated Figma prototypes (Milestone 5 → 7).</p>
+        <p><em>i will add sketches, decision logs, and iteration screenshots here.</em></p>
+      </div>
+
+      <h2>Outcome &amp; Reflection</h2>
+      <div class="placeholder-box">
+        <p>Key insight: accessibility design is not about bridging a gap to a "normal" experience — it is about designing for the full range of how people communicate. Integrated &gt; bolted-on.</p>
+        <p><em>i will add final prototype link, team reflection, and next steps (sign-to-speech future state) here.</em></p>
+      </div>
+    </div>
+  `
+},
       resume: {
         title: "Resume",
         path: "macintosh hd:portfolio:resume",
