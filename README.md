@@ -1,1 +1,1 @@
-# [laurencho's portfolio](https://excalibrr.github.io/laurenchoportfolio/)
+# [lauren cho's portfolio](https://excalibrr.github.io/laurenchoportfolio/)
